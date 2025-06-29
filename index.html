@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyleaMUN Letter Generator</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border: 1px solid #ddd;
+        }
+
+        #input-form {
+            border-bottom: 2px dashed #ccc;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #input-form h2 {
+            text-align: center;
+            color: #004466;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            background-color: #0056b3;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button:hover {
+            background-color: #004494;
+        }
+
+        #letter-output {
+            display: none; /* Hidden by default */
+        }
+        
+        #print-button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .header-logo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header-logo img {
+            max-width: 120px;
+        }
+
+        .contact-info {
+            text-align: center;
+            font-size: 13px; /* Slightly Increased */
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        
+        .hosted-by {
+            text-align: center;
+            font-size: 1.2em; 
+            color: #004466;
+            font-style: italic;
+            margin: 10px 0;
+            padding: 8px;
+            background-color: #e9ecef;
+        }
+        
+        #letter-output p {
+            margin: 6px 0;
+            text-align: left;
+        }
+
+        #countries-list {
+            padding-left: 40px;
+            font-weight: bold;
+            margin: 8px 0;
+            text-align: left;
+        }
+        
+        .signature {
+            margin-top: 15px;
+            text-align: left;
+        }
+        
+        .footer-logo {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .footer-logo img {
+            max-width: 140px;
+            opacity: 0.7;
+        }
+
+        /* Print-specific styles for A4 fitting */
+        @media print {
+            body {
+                background-color: #fff;
+                padding: 0;
+                margin: 0;
+                /* Increased from 11pt to 12pt (~10%) */
+                font-size: 12pt; 
+            }
+            
+            #letter-output {
+                /* Slightly increased for better readability with larger font */
+                line-height: 1.4; 
+            }
+
+            #input-form,
+            #print-button-container {
+                display: none !important;
+            }
+
+            .container {
+                border: none;
+                box-shadow: none;
+                max-width: 100%;
+                padding: 0;
+            }
+            
+            .contact-info {
+                /* Increased from 10pt to 11pt */
+                font-size: 11pt; 
+            }
+            
+            .hosted-by {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="input-form">
+            <div class="header-logo">
+                <img src="logo.png" alt="PyleaMUN Logo">
+            </div>
+            <div class="contact-info">
+                4 Isminis Str., Pylaia, Thessaloniki - 55535<br>
+                📞 +30 2310329199 | 📧 pyleamun@gmail.com | 🌐 https://pyleamun.github.io/pyleamun2026/
+            </div>
+
+            <h2>PyleaMUN Letter Generator</h2>
+            <div class="form-group">
+                <label for="school-name">School Name:</label>
+                <input type="text" id="school-name" value="2nd General High School of Sykeon “Philippos”">
+            </div>
+            <div class="form-group">
+                <label for="deadline">Deadline for Registration:</label>
+                <input type="date" id="deadline">
+            </div>
+            <div class="form-group">
+                <label for="countries">Allocated Countries (one per line):</label>
+                <textarea id="countries" rows="4">Greece
+Denmark</textarea>
+            </div>
+            <div class="button-container">
+                <button onclick="generateLetter()" class="button">Generate Letter</button>
+            </div>
+             <div class="footer-logo">
+                <img src="blue.png" alt="PyleaMUN Footer Logo">
+            </div>
+        </div>
+
+        <div id="letter-output">
+            <div class="header-logo">
+                <img src="logo.png" alt="PyleaMUN Logo">
+            </div>
+            <div class="contact-info">
+                4 Isminis Str., Pylaia, Thessaloniki - 55535<br>
+                📞 +30 2310329199 | 📧 pyleamun@gmail.com | 🌐 https://pyleamun.github.io/pyleamun2026/
+            </div>
+
+            <div class="hosted-by">
+                Hosted by the 1st Middle School of Pylea, Thessaloniki
+            </div>
+
+            <p><strong>Subject:</strong> PyleaMUN 2025: Country Allocation and Registration for <span id="output-school-name-subject"></span></p>
+
+            <p>Dear Advisor,</p>
+            <p>On behalf of the PyleaMUN 2025 Organizing Committee, we extend our sincere gratitude for your school's registration for this year's conference. We are delighted to welcome you and your delegation to what we anticipate will be an engaging and enriching experience.</p>
+            <p>We are pleased to confirm that your delegation has been allocated the requested countries. The confirmed assignments for the <span id="output-school-name-body"></span> are as follows:</p>
+            
+            <ul id="countries-list">
+                </ul>
+
+            <p>These assignments have now been marked as unavailable on our official website: https://pyleamun.github.io/countries2025/</p>
+            <p>The next step is the completion of the formal registration form, where you will allocate your students to their respective committees. We kindly request that you complete this form by <strong id="output-deadline"></strong>: https://pyleamun.github.io/delegation-registration/</p>
+            <p>As you may be aware, PyleaMUN 2025 is a conference with no participation fee. Therefore, timely confirmation of your attendance by the specified deadlines is crucial for the effective organization and allocation of available seats.</p>
+            <p>Furthermore, we wish to inform you that this year's conference will be an environmentally friendly event. Consequently, all certificates will be issued electronically. Please ensure that the delegates' names are submitted exactly as they should appear on the certificates.</p>
+            <p>Should you have any further inquiries, please do not hesitate to contact us.</p>
+
+            <div class="signature">
+                <p>Sincerely,<br>The PyleaMUN 2026<br>Organizing Committee</p>
+            </div>
+
+            <div class="footer-logo">
+                <img src="blue.png" alt="PyleaMUN Footer Logo">
+            </div>
+
+            <div id="print-button-container">
+                <button onclick="window.print()" class="button">Print to PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Pre-fill the date input with the deadline from the document
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set the date to September 30, 2025
+            const deadlineInput = document.getElementById('deadline');
+            // Months are 0-indexed in JS, so September is 8
+            const deadlineDate = new Date(2025, 8, 30);
+            // Format to 'YYYY-MM-DD' for the input field
+            const year = deadlineDate.getFullYear();
+            const month = String(deadlineDate.getMonth() + 1).padStart(2, '0');
+            const day = String(deadlineDate.getDate()).padStart(2, '0');
+            deadlineInput.value = `${year}-${month}-${day}`;
+        });
+
+        function generateLetter() {
+            // Get values from the form
+            const schoolName = document.getElementById('school-name').value;
+            const deadlineInput = document.getElementById('deadline').value;
+            const countries = document.getElementById('countries').value;
+
+            // Format the deadline date for display
+            const deadlineDate = new Date(deadlineInput + 'T00:00:00'); // Mitigate timezone issues
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDeadline = deadlineDate.toLocaleDateString('en-US', options);
+
+            // Populate the letter with the values
+            document.getElementById('output-school-name-subject').innerText = schoolName;
+            document.getElementById('output-school-name-body').innerText = schoolName;
+            document.getElementById('output-deadline').innerText = formattedDeadline;
+
+            // Populate the countries list from the source document
+            const countriesList = document.getElementById('countries-list');
+            countriesList.innerHTML = ''; 
+            
+            // This part is now dynamic, but we can add the original countries as an example
+            const countriesArray = countries.split('\n').filter(country => country.trim() !== '');
+            countriesArray.forEach(country => {
+                const li = document.createElement('li');
+                li.innerText = country.trim();
+                countriesList.appendChild(li);
+            });
+
+
+            // Hide the form and show the letter
+            document.getElementById('input-form').style.display = 'none';
+            document.getElementById('letter-output').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
