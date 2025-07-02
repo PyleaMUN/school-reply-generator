@@ -23,40 +23,12 @@
         }
 
         #input-form {
-            border-bottom: 2px dashed #ccc;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
             text-align: center;
         }
 
         #input-form h2 {
             text-align: center;
             color: #004466;
-            margin-top: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .button-container {
-            text-align: center;
             margin-top: 20px;
         }
 
@@ -70,19 +42,6 @@
             font-size: 16px;
         }
 
-        .button:hover {
-            background-color: #004494;
-        }
-
-        #letter-output {
-            display: none; /* Hidden by default */
-        }
-        
-        #print-button-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
         .header-logo {
             text-align: center;
             margin-bottom: 10px;
@@ -94,14 +53,14 @@
 
         .contact-info {
             text-align: center;
-            font-size: 13px; /* Slightly Increased */
+            font-size: 13px;
             margin-bottom: 10px;
             line-height: 1.3;
         }
         
         .hosted-by {
             text-align: center;
-            font-size: 1.2em; 
+            font-size: 1.2em;
             color: #004466;
             font-style: italic;
             margin: 10px 0;
@@ -136,19 +95,16 @@
             opacity: 0.7;
         }
 
-        /* Print-specific styles for A4 fitting */
         @media print {
             body {
                 background-color: #fff;
                 padding: 0;
                 margin: 0;
-                /* Increased from 11pt to 12pt (~10%) */
                 font-size: 12pt; 
             }
             
             #letter-output {
-                /* Slightly increased for better readability with larger font */
-                line-height: 1.4; 
+                line-height: 1.4;
             }
 
             #input-form,
@@ -164,8 +120,7 @@
             }
             
             .contact-info {
-                /* Increased from 10pt to 11pt */
-                font-size: 11pt; 
+                font-size: 11pt;
             }
             
             .hosted-by {
@@ -178,39 +133,14 @@
 
     <div class="container">
         <div id="input-form">
-            <div class="header-logo">
-                <img src="logo.png" alt="PyleaMUN Logo">
-            </div>
-            <div class="contact-info">
-                4 Isminis Str., Pylaia, Thessaloniki - 55535<br>
-                📞 +30 2310329199 | 📧 pyleamun@gmail.com | 🌐 https://pyleamun.github.io/pyleamun2026/
-            </div>
-
             <h2>PyleaMUN Letter Generator</h2>
-            <div class="form-group">
-                <label for="school-name">School Name:</label>
-                <input type="text" id="school-name" value="2nd General High School of Sykeon “Philippos”">
-            </div>
-            <div class="form-group">
-                <label for="deadline">Deadline for Registration:</label>
-                <input type="date" id="deadline">
-            </div>
-            <div class="form-group">
-                <label for="countries">Allocated Countries (one per line):</label>
-                <textarea id="countries" rows="4">Greece
-Denmark</textarea>
-            </div>
-            <div class="button-container">
-                <button onclick="generateLetter()" class="button">Generate Letter</button>
-            </div>
-             <div class="footer-logo">
-                <img src="blue.png" alt="PyleaMUN Footer Logo">
-            </div>
+            <p>This page is meant to be opened from the registration dashboard.</p>
+            <p>If you are seeing this, please go back to the dashboard and click the "Generate Reply" button for a specific school.</p>
         </div>
 
-        <div id="letter-output">
+        <div id="letter-output" style="display: none;">
             <div class="header-logo">
-                <img src="logo.png" alt="PyleaMUN Logo">
+                <img src="https://pyleamun.github.io/interview-guide/pyleaMUNfinallogo_transparent.png" alt="PyleaMUN Logo">
             </div>
             <div class="contact-info">
                 4 Isminis Str., Pylaia, Thessaloniki - 55535<br>
@@ -227,8 +157,7 @@ Denmark</textarea>
             <p>On behalf of the PyleaMUN 2025 Organizing Committee, we extend our sincere gratitude for your school's registration for this year's conference. We are delighted to welcome you and your delegation to what we anticipate will be an engaging and enriching experience.</p>
             <p>We are pleased to confirm that your delegation has been allocated the requested countries. The confirmed assignments for the <span id="output-school-name-body"></span> are as follows:</p>
             
-            <ul id="countries-list">
-                </ul>
+            <ul id="countries-list"></ul>
 
             <p>These assignments have now been marked as unavailable on our official website: https://pyleamun.github.io/countries2025/</p>
             <p>The next step is the completion of the formal registration form, where you will allocate your students to their respective committees. We kindly request that you complete this form by <strong id="output-deadline"></strong>: https://pyleamun.github.io/delegation-registration/</p>
@@ -237,11 +166,11 @@ Denmark</textarea>
             <p>Should you have any further inquiries, please do not hesitate to contact us.</p>
 
             <div class="signature">
-                <p>Sincerely,<br>The PyleaMUN 2026<br>Organizing Committee</p>
+                <p>Sincerely,<br>The PyleaMUN 2025<br>Organizing Committee</p>
             </div>
 
             <div class="footer-logo">
-                <img src="blue.png" alt="PyleaMUN Footer Logo">
+                <img src="https://pyleamun.github.io/assets/pyleamun-blue-logo.png" alt="PyleaMUN Footer Logo">
             </div>
 
             <div id="print-button-container">
@@ -251,52 +180,43 @@ Denmark</textarea>
     </div>
 
     <script>
-        // Pre-fill the date input with the deadline from the document
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set the date to September 30, 2025
-            const deadlineInput = document.getElementById('deadline');
-            // Months are 0-indexed in JS, so September is 8
-            const deadlineDate = new Date(2025, 8, 30);
-            // Format to 'YYYY-MM-DD' for the input field
-            const year = deadlineDate.getFullYear();
-            const month = String(deadlineDate.getMonth() + 1).padStart(2, '0');
-            const day = String(deadlineDate.getDate()).padStart(2, '0');
-            deadlineInput.value = `${year}-${month}-${day}`;
-        });
+        window.onload = function() {
+            // Get data from the URL's query string
+            const params = new URLSearchParams(window.location.search);
+            const schoolName = params.get('schoolName');
+            const assignedCountries = params.get('assignedCountries');
 
-        function generateLetter() {
-            // Get values from the form
-            const schoolName = document.getElementById('school-name').value;
-            const deadlineInput = document.getElementById('deadline').value;
-            const countries = document.getElementById('countries').value;
+            // If no schoolName was passed in the URL, do nothing and leave the form visible.
+            if (!schoolName) {
+                return;
+            }
 
-            // Format the deadline date for display
-            const deadlineDate = new Date(deadlineInput + 'T00:00:00'); // Mitigate timezone issues
+            // --- Populate the Letter ---
+
+            // Set the deadline date
+            const deadlineDate = new Date('2025-09-30T00:00:00');
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             const formattedDeadline = deadlineDate.toLocaleDateString('en-US', options);
 
-            // Populate the letter with the values
+            // Populate the school name and deadline
             document.getElementById('output-school-name-subject').innerText = schoolName;
             document.getElementById('output-school-name-body').innerText = schoolName;
             document.getElementById('output-deadline').innerText = formattedDeadline;
 
-            // Populate the countries list from the source document
+            // Populate the countries list
             const countriesList = document.getElementById('countries-list');
-            countriesList.innerHTML = ''; 
-            
-            // This part is now dynamic, but we can add the original countries as an example
-            const countriesArray = countries.split('\n').filter(country => country.trim() !== '');
+            countriesList.innerHTML = ''; // Clear any default items
+            const countriesArray = assignedCountries.split(',').filter(country => country.trim() !== '');
             countriesArray.forEach(country => {
                 const li = document.createElement('li');
                 li.innerText = country.trim();
                 countriesList.appendChild(li);
             });
 
-
-            // Hide the form and show the letter
+            // --- Show the Letter ---
             document.getElementById('input-form').style.display = 'none';
             document.getElementById('letter-output').style.display = 'block';
-        }
+        };
     </script>
 
 </body>
